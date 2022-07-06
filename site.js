@@ -1,4 +1,25 @@
 (function($, document) {
+  var BrowserText = (function () {
+      var canvas = document.createElement('canvas'),
+          context = canvas.getContext('2d');
+
+      /**
+       * Measures the rendered width of arbitrary text given the font size and font face
+       * @param {string} text The text to measure
+       * @param {number} fontSize The font size in pixels
+       * @param {string} fontFace The font face ("Arial", "Helvetica", etc.)
+       * @returns {number} The width of the text
+       **/
+      function getWidth(text, fontSize, fontFace) {
+          context.font = fontSize + 'px ' + fontFace;
+          return context.measureText(text).width;
+      }
+
+      return {
+          getWidth: getWidth
+      };
+  })();
+
   $(document).ready(function() {
     $.ajax({
       url: 'family_tree.json',
@@ -59,7 +80,7 @@
               .attr("r", 1e-6)
               .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
 
-          nodeEnter.append("text")
+          var text = nodeEnter.append("text")
               .attr("x", 10)
               .attr("dy", ".35em")
               .attr("text-anchor", "start")
@@ -77,7 +98,7 @@
 
           nodeUpdate.select("text")
               .style("fill-opacity", 1)
-              .attr("transform", function(d) { return d.x < 180 ? "translate(0)" : "rotate(180)translate(-" + (d.name.length + 50)  + ")"; });
+              .attr("transform", function(d) { return d.x < 180 ? "translate(0)" : "rotate(180)translate(-" + (BrowserText.getWidth(d.name, 10) + 30)  + ")"; });
 
           var nodeExit = node.exit().transition()
               .duration(duration)

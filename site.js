@@ -220,7 +220,7 @@
 
       var tree = d3.layout.tree()
           .size([360, diameter / 2 - 80])
-          .separation(function(a, b) { return (a.parent == b.parent ? 1 : 10) / a.depth; });
+          .separation(function(a, b) { return (a.parent == b.parent ? 2 : 10) / a.depth; });
 
       var diagonal = d3.svg.diagonal.radial()
           .projection(function(d) { return [d.y, d.x / 180 * Math.PI]; });
@@ -337,8 +337,8 @@
             .attr("r", 1e-6)
             .style("fill", function(d) { return d._children ? "lightsteelblue" : "#fff"; });
 
-        var text = nodeEnter.append("text")
-            .attr("x", 10)
+        nodeEnter.append("text")
+            .attr("dx", 10)
             .attr("dy", ".35em")
             .attr("text-anchor", "start")
             .text(function(d) { return d.name; })
@@ -356,7 +356,9 @@
 
         nodeUpdate.select("text")
             .style("fill-opacity", 1)
-            .attr("transform", function(d) { return d.x < 180 ? "translate(0)" : "rotate(180)translate(-" + (BrowserText.getWidth(d.name, 10) + 30)  + ")"; });
+            .attr("dx", d => d.x < 180 ? 8 : -8)
+            .attr("text-anchor", d => d.x < 180 ? "start" : "end")
+            .attr("transform", d =>  d.x < 180 ? null : "rotate(180)")
 
         var nodeExit = node.exit().transition()
             .duration(duration)

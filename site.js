@@ -2,27 +2,6 @@
   const creatorAddress = "KANIGZX2NQKJKYJ425BWYKCT5EUHSPBRLXEJLIT2JHGTWOJ2MLYCNIVHFI";
   const ownedAssets = [];
 
-  var BrowserText = (function () {
-      var canvas = document.createElement("canvas"),
-          context = canvas.getContext("2d");
-
-      /**
-       * Measures the rendered width of arbitrary text given the font size and font face
-       * @param {string} text The text to measure
-       * @param {number} fontSize The font size in pixels
-       * @param {string} fontFace The font face ("Arial", "Helvetica", etc.)
-       * @returns {number} The width of the text
-       **/
-      function getWidth(text, fontSize, fontFace) {
-          context.font = fontSize + "px " + fontFace;
-          return context.measureText(text).width;
-      }
-
-      return {
-          getWidth: getWidth
-      };
-  })();
-
   var Algorand = (function () {
     const indexerClient = new algosdk.Indexer("", "https://algoindexer.algoexplorerapi.io", 443);
 
@@ -184,7 +163,6 @@
           tx: tx,
           metadata: metadata,
           name: metadata.description.replace(/^\s*Kani World - /i, ""),
-          strokeColor: metadata.properties['Mutation'] === 'False' ? null : 'red',
         });
       });
 
@@ -302,28 +280,19 @@
               div.transition()
                 .duration(200)
                 .style("opacity", .9);
-              div.html("<dl>" +
-                  "<dt>Asset ID:</dt><dd>" + d.id + "</dd>" +
-                  "<dt>Asset Name:</dt><dd>" + d.asset.params.name + "</dd>" +
-                  "<dt>Name:</dt><dd>"  + d.name + "</dd>" +
-                  "<dt>Power:</dt><dd>" + d.metadata.properties['Power'] + "</dd>" +
-                  "<dt>Wrestle:</dt><dd>" + d.metadata.properties['Wrestle'] + "</dd>" +
-                  "<dt>Stamina:</dt><dd>" + d.metadata.properties['Stamina'] + "</dd>" +
-                  "<dt>Appeal:</dt><dd>" + d.metadata.properties['Appeal'] + "</dd>" +
-                  "<dt>Speed:</dt><dd>" + d.metadata.properties['Speed'] + "</dd>" +
-                  "<dt>Special Move:</dt><dd>" + d.metadata.properties['Special Move'] + "</dd>" +
-                  "<dt>Region:</dt><dd>" + d.metadata.properties['Region'] + "</dd>" +
-                  "<dt>Power Bonus:</dt><dd>" + d.metadata.properties['Power Bonus'] + "</dd>" +
-                  "<dt>Wrestle Bonus:</dt><dd>" + d.metadata.properties['Wrestle Bonus'] + "</dd>" +
-                  "<dt>Mutation:</dt><dd>" + d.metadata.properties['Mutation'] + "</dd>" +
-                  "<dt>Sex:</dt><dd>" + d.metadata.properties['Sex'] + "</dd>" +
-                  "<dt>Mother:</dt><dd>" + d.metadata.properties['Mother'] + "</dd>" +
-                  "<dt>Father:</dt><dd>" + d.metadata.properties['Father'] + "</dd>" +
-                  "<dt>Highlights:</dt><dd>" + d.metadata.properties['Highlights'] + "</dd>" +
-                  "<dt>Background:</dt><dd>" + d.metadata.properties['Background'] + "</dd>" +
-                  "<dt>Children:</dt><dd>" + (d.children ? d.children.length : 0) + "</dd>" +
-                  "<dt>Descendants:</dt><dd>" + Graph.descendants(d) + "</dd>" +
-                  "</dl>")
+              var html = "<dl>" +
+                "<dt>Asset ID:</dt><dd>" + d.id + "</dd>" +
+                "<dt>Asset Name:</dt><dd>" + d.asset.params.name + "</dd>" +
+                "<dt>Name:</dt><dd>"  + d.name + "</dd>";
+              for (var property in d.metadata.properties) {
+                if (d.metadata.properties.hasOwnProperty(property)) {
+                  html += "<dt>" + property + ":</dt><dd>" + d.metadata.properties[property] + "</dd>";
+                }
+              }
+              html += "<dt>Children:</dt><dd>" + (d.children ? d.children.length : 0) + "</dd>" +
+                "<dt>Descendants:</dt><dd>" + Graph.descendants(d) + "</dd>" +
+                "</dl>";
+              div.html(html)
                 .style("left", (d3.event.pageX) + "px")
                 .style("top", (d3.event.pageY - 75) + "px");
             })

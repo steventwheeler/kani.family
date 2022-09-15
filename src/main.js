@@ -12,7 +12,7 @@ const algorandClient = new Algorand();
 
 function metadataToNode(id, asset, metadata) {
   var name = metadata.description;
-  if (name) name = name.replace(/^\s*Kani World - /i, "");
+  if (name) name = name.replace(/^\s*Kani World - (Kani )?/i, "");
   return {
     id: id,
     children: [],

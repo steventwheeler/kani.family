@@ -52,15 +52,9 @@
 .tooltip img {
   width: 100%;
 }
-table.mykani {
-  font-size: 12px;
-}
 table.mykani td.success {
   background-color: #28a745!important;
 }
 table.mykani td.warning {
   background-color: #ffc107!important;
-}
-table.mykani tr:nth-child(even) {
-  background-color: #efefef;
 }

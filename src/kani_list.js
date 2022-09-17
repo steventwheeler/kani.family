@@ -99,7 +99,7 @@ function drawTable(data, fullDataset) {
   // Initialize the table view.
   var table = d3.select("#content")
     .append("table")
-    .attr("class", "mykani");
+    .attr("class", "mykani table table-striped table-sm");
 
   var columns = [
     { head: "Unit", html: k => k["asset"]["params"]["unit-name"] },
@@ -125,12 +125,13 @@ function drawTable(data, fullDataset) {
     { head: "Background", html: k => k["metadata"]["properties"]["Background"] },
     { head: "Children", html: k => countChildren(fullDataset, k.id) },
   ];
-  table.append("thead")
-    .selectAll("th")
+  table.append('thead')
+    .append('tr')
+    .selectAll('th')
     .data(columns)
     .enter()
-    .append("th")
-    .attr("class", c => c.cl)
+    .append('th')
+    .attr('class', c => c.cl)
     .text(c => c.head);
   table.append("tbody")
     .selectAll("tr")

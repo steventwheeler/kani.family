@@ -123,7 +123,7 @@ function drawTable(data, fullDataset) {
     { head: "Father", html: k => parentLink(fullDataset, k["metadata"]["properties"]["Father"]) },
     { head: "Highlights", html: k => k["metadata"]["properties"]["Highlights"] },
     { head: "Background", html: k => k["metadata"]["properties"]["Background"] },
-    { head: "Children", html: k => countChildren(data, k.id) },
+    { head: "Children", html: k => countChildren(fullDataset, k.id) },
   ];
   table.append("thead")
     .selectAll("th")

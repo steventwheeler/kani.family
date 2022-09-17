@@ -28,7 +28,7 @@ class Graph {
       var node = queue.shift();
       if (node.id === id) return node;
 
-      queue.push(...node.children);
+      if (node.children) queue.push(...node.children);
     }
 
     throw "Unknown node: " + id;

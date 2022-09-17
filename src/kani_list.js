@@ -61,12 +61,12 @@ function countChildren(data, parentId) {
   return data.filter(e => e["metadata"]["properties"]["Mother"] == parentId || e["metadata"]["properties"]["Father"] == parentId).length;
 }
 
-function rankBackground(rank, max) {
-  var red = new Color("#dc3545");
-  var white = new Color("white");
-  var green = new Color("#28a745");
-  var gradient = white.range(rank >= 0?green:red);
-  return gradient(Math.abs(rank) / (max * 1.25)).to("sRGB").toString();
+function rankBackground(rank, set) {
+  var min = Math.min(...set);
+  var max = Math.max(...set);
+  var offset = -1 * min;
+  var gradient = new Color("white").range(new Color("#28a745"));
+  return gradient((rank + offset) / ((max + offset) * 1.25)).to("sRGB").toString();
 }
 
 function specialMoveAttribute(move) {
@@ -173,11 +173,11 @@ export default function kaniList(data) {
     });
     data.forEach(k => {
       k["rankColors"] = {
-        power: rankBackground(k.ranks.power, Math.max(...data.map(k2 => k2.ranks.power))),
-        wrestle: rankBackground(k.ranks.wrestle, Math.max(...data.map(k2 => k2.ranks.wrestle))),
-        stamina: rankBackground(k.ranks.stamina, Math.max(...data.map(k2 => k2.ranks.stamina))),
-        appeal: rankBackground(k.ranks.appeal, Math.max(...data.map(k2 => k2.ranks.appeal))),
-        speed: rankBackground(k.ranks.speed, Math.max(...data.map(k2 => k2.ranks.speed))),
+        power: rankBackground(k.ranks.power, data.map(k2 => k2.ranks.power)),
+        wrestle: rankBackground(k.ranks.wrestle, data.map(k2 => k2.ranks.wrestle)),
+        stamina: rankBackground(k.ranks.stamina, data.map(k2 => k2.ranks.stamina)),
+        appeal: rankBackground(k.ranks.appeal, data.map(k2 => k2.ranks.appeal)),
+        speed: rankBackground(k.ranks.speed, data.map(k2 => k2.ranks.speed)),
       };
     });
 

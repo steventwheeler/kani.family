@@ -13,7 +13,7 @@ function intWithSign(i) {
 }
 
 function attributeRankSpan(value, rank) {
-  var title = "This attribute is " + (rank == 0?"equal to":(Math.abs(rank) + " buffs " + (rank < 0?"below":"above"))) + " the average value.";
+  var title = "This attribute is " + (rank == 0?"equal to":(Math.abs(rank) + " buffs " + (rank < 0?"below":"above"))) + " the median value.";
   return "<span class='attribute' title='" + title + "'>" + value + "<sup class='rank'>" + intWithSign(rank) + "</sup></span>"
 }
 

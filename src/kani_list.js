@@ -13,7 +13,8 @@ function intWithSign(i) {
 }
 
 function attributeRankSpan(value, rank) {
-  var title = "This attribute is " + (rank == 0?"equal to":(Math.abs(rank) + " buffs " + (rank < 0?"below":"above"))) + " the median value.";
+  var buffOrBuffs = "buff" + Math.abs(rank) == 1?"":"s"
+  var title = "This attribute is " + (rank == 0?"equal to":(Math.abs(rank) + " " + buffOrBuffs + " " + (rank < 0?"below":"above"))) + " the median value.";
   return "<span class='attribute' title='" + title + "'>" + value + "<sup class='rank'>" + intWithSign(rank) + "</sup></span>"
 }
 
@@ -99,18 +100,18 @@ function drawTable(data, fullDataset) {
   // Initialize the table view.
   var table = d3.select("#content")
     .append("table")
-    .attr("class", "mykani table table-striped table-sm");
+    .attr("class", "mykani table table-striped table-sm compact");
 
   var columns = [
     { head: "Unit", html: k => k["asset"]["params"]["unit-name"] },
     { head: "Asset ID", html: k => nftExplorerLink(k.id) },
     { head: "Name", html: k => "<span title='" + k.metadata.description  + "'>" + k.name + "</span>" },
     // { head: "Image", html: k => {} },
-    { head: "Power", bg: k => k.rankColors.power, html: k => attributeRankSpan(k.power, k.ranks.power) },
-    { head: "Wrestle", bg: k => k.rankColors.wrestle, html: k => attributeRankSpan(k.wrestle, k.ranks.wrestle) },
-    { head: "Stamina", bg: k => k.rankColors.stamina, html: k => attributeRankSpan(k.stamina, k.ranks.stamina) },
-    { head: "Appeal", bg: k => k.rankColors.appeal, html: k => attributeRankSpan(k.appeal, k.ranks.appeal) },
-    { head: "Speed", bg: k => k.rankColors.speed, html: k => attributeRankSpan(k.speed, k.ranks.speed) },
+    { head: "Power", bg: k => k.rankColors.power, html: k => attributeRankSpan(k.power, k.ranks.power), sort: k => k.power },
+    { head: "Wrestle", bg: k => k.rankColors.wrestle, html: k => attributeRankSpan(k.wrestle, k.ranks.wrestle), sort: k => k.wrestle },
+    { head: "Stamina", bg: k => k.rankColors.stamina, html: k => attributeRankSpan(k.stamina, k.ranks.stamina), sort: k => k.stamina },
+    { head: "Appeal", bg: k => k.rankColors.appeal, html: k => attributeRankSpan(k.appeal, k.ranks.appeal), sort: k => k.appeal },
+    { head: "Speed", bg: k => k.rankColors.speed, html: k => attributeRankSpan(k.speed, k.ranks.speed), sort: k => k.speed },
     { head: "Fight Rank", html: k => intWithSign(k.ranks.power + k.ranks.wrestle + k.ranks.stamina) },
     { head: "Total Rank", html: k => intWithSign(k.ranks.power + k.ranks.wrestle + k.ranks.stamina + k.ranks.appeal + k.ranks.speed) },
     { head: "Special Move", html: k => k["metadata"]["properties"]["Special Move"] },
@@ -152,7 +153,12 @@ function drawTable(data, fullDataset) {
     .append("td")
     .html(c => c.html)
     .attr("class", c => c.cl)
-    .style("background-color", c => c.bg);
+    .style("background-color", c => c.bg)
+    .attr("data-sort", c => c.sort);
+
+  $("#content > table").DataTable({
+    paging: false,
+  });
 }
 
 export default function kaniList(data) {

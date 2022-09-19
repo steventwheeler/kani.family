@@ -91,6 +91,12 @@ function specialMoveBackground(kani) {
   return "warning";
 }
 
+function generationIndex(generationStr) {
+  if (generationStr == "Original8") return 0;
+  if (!generationStr || generationStr == "") return -1;
+  return parseInt(generationStr.match(/[0-9]+/)[0]);
+}
+
 function drawTable(data, fullDataset) {
   if (!fullDataset) fullDataset = data;
 
@@ -124,6 +130,7 @@ function drawTable(data, fullDataset) {
     { head: "Father", html: k => parentLink(fullDataset, k["metadata"]["properties"]["Father"]) },
     { head: "Highlights", html: k => k["metadata"]["properties"]["Highlights"] },
     { head: "Background", html: k => k["metadata"]["properties"]["Background"] },
+    { head: "Generation", html: k => k["metadata"]["properties"]["Generation"], sort: k => generationIndex(k["metadata"]["properties"]["Generation"]) },
     { head: "Children", html: k => countChildren(fullDataset, k.id) },
   ];
   table.append('thead')

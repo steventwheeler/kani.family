@@ -106,7 +106,7 @@ function drawTable(data, fullDataset) {
   // Initialize the table view.
   var table = d3.select("#content")
     .append("table")
-    .attr("class", "mykani table table-striped table-sm compact");
+    .attr("class", "mykani table table-striped table-sm table-hover compact");
 
   var columns = [
     { head: "Unit", html: k => k["asset"]["params"]["unit-name"] },

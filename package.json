@@ -1,7 +1,11 @@
 {
+  "name": "kani.family",
+  "scripts": {
+    "build": "browserify src/main.js -p esmify -o bundle.js"
+  },
   "dependencies": {
     "algosdk": "^1.19.0",
-    "ipfs-core": "^0.14.0",
+    "ipfs-core": "^0.17.0",
     "it-to-buffer": "^2.0.2",
     "multiformats": "^9.7.1"
   },

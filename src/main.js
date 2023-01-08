@@ -5,11 +5,9 @@ import loadKani from "./kani_loader.js";
 import familyTree from "./family_tree.js";
 import kaniList from "./kani_list.js";
 
-const ipfsPromise = IPFS.create()
-
 $(document).ready(e => {
   console.log("Loading data...");
-  loadKani(ipfsPromise)
+  loadKani(IPFS.create())
     .then(kaniData => {
       activateView(urlView(), kaniData);
 

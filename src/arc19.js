@@ -5,18 +5,17 @@ import * as mfsha2 from "multiformats/hashes/sha2";
 import * as digest from "multiformats/hashes/digest";
 import { CID } from "multiformats/cid";
 
-
-class ARC19 {
+export default class ARC19 {
   static REGEX = "template-ipfs://{ipfscid:(?<version>[01]):(?<codec>[a-z0-9\-]+):(?<field>[a-z0-9\-]+):(?<hash>[a-z0-9\-]+)}";
   static parse(url, reserveAddress) {
     var cid = ARC19.parseCID(url, reserveAddress);
     var ipfsUrl = "ipfs://" + cid.toString();
-    console.log("IPFS URL: " + ipfsUrl);
+    // console.log("IPFS URL: " + ipfsUrl);
     return ipfsUrl;
   }
 
   static parseCID(url, reserveAddress) {
-    console.log("Parsing ARC19 template-ipfs: URL='" + url + "', reserve address='" + reserveAddress + "'.");
+    // console.log("Parsing ARC19 template-ipfs: URL='" + url + "', reserve address='" + reserveAddress + "'.");
     var matches = url.match(ARC19.REGEX);
     if (!matches) {
       if (url.startsWith("template-ipfs://")) throw "unsupported template-ipfs spec";
@@ -62,5 +61,3 @@ class ARC19 {
     }
   }
 }
-
-module.exports = ARC19;

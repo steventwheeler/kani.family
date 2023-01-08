@@ -1,6 +1,6 @@
 'use strict'
 
-class Graph {
+export default class Graph {
   graph = [];
   constructor() {
 
@@ -57,5 +57,3 @@ class Graph {
     return count;
   }
 }
-
-module.exports = Graph;

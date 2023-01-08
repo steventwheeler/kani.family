@@ -2,7 +2,7 @@
 
 const algosdk = require('algosdk');
 
-class Algorand {
+export default class Algorand {
   constructor() {
     this.indexerClient = new algosdk.Indexer("", "https://algoindexer.algoexplorerapi.io", 443);
   }
@@ -82,5 +82,3 @@ class Algorand {
     return execute();
   }
 }
-
-module.exports = Algorand;

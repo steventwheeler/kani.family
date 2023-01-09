@@ -67,7 +67,7 @@ export default function loadKani(ipfsPromise) {
         var name = asset["params"]["unit-name"];
         if (asset.params.url.startsWith("template-ipfs://")) {
           var cid = ARC19.parseCID(asset.params.url, asset.params.reserve).toString();
-          console.log(name + " (" + id + ") uses ARC16, loading " + cid + " from IPFS...");
+          console.log(name + " (" + id + ") uses ARC19, loading " + cid + " from IPFS...");
           return toBuffer(ipfs.cat(cid, { timeout: 60_000 }))
             .then(contents => new TextDecoder("utf-8").decode(contents))
             .then(text => JSON.parse(text))

@@ -5,4 +5,4 @@ services:
     ports:
       - "9080:80"
     volumes:
-      - ./:/usr/local/apache2/htdocs/
+      - ./dist:/usr/local/apache2/htdocs/

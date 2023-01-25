@@ -1,37 +1,22 @@
 {
   "name": "kani.family",
+  "private": true,
+  "type": "module",
   "scripts": {
-    "build": "browserify src/main.js -p esmify -o bundle.js"
+    "build": "vite build",
+    "dev": "vite dev --port 8888"
   },
   "dependencies": {
-    "algosdk": "^1.19.0",
-    "ipfs-core": "^0.17.0",
-    "it-to-buffer": "^2.0.2",
-    "multiformats": "^9.7.1"
+    "algosdk": "^2.0.0",
+    "axios": "^1.2.4",
+    "buffer": "^6.0.3",
+    "https": "^1.0.0",
+    "ipfs-core": "^0.18.0",
+    "it-to-buffer": "^3.0.0",
+    "multiformats": "^11.0.1"
   },
   "devDependencies": {
-    "@babel/cli": "^7.18.10",
-    "@babel/core": "^7.18.10",
-    "@babel/preset-env": "^7.18.10",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-0": "^6.24.1",
-    "babelify": "^10.0.0",
-    "browserify": "^17.0.0",
-    "esmify": "^2.1.1",
-    "watchify": "^4.0.0"
-  },
-  "browserify": {
-    "transform": [
-      [
-        "babelify",
-        {
-          "presets": [
-            "@babel/preset-env"
-          ]
-        }
-      ]
-    ]
+    "@rollup/plugin-inject": "^5.0.3",
+    "vite": "^4.0.4"
   }
 }

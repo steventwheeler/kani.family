@@ -1,6 +1,6 @@
 'use strict'
 
-const algosdk = require('algosdk');
+import algosdk from 'algosdk';
 
 export default class Algorand {
   constructor() {

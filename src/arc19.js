@@ -1,6 +1,6 @@
 "use strict"
 
-const algosdk = require("algosdk");
+import algosdk from "algosdk";
 import * as mfsha2 from "multiformats/hashes/sha2";
 import * as digest from "multiformats/hashes/digest";
 import { CID } from "multiformats/cid";
